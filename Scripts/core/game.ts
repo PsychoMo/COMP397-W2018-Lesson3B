@@ -10,9 +10,12 @@
   let clickMeButton: objects.Button;
   let assetManager: createjs.LoadQueue;
   let assetManifest: any[];
+  let currentScene: objects.Scene;
 
-
-  assetManifest = [{ id: "clickMeButton", src: "./Assets/images/clickMeButton.png" }];
+  assetManifest = [
+    { id: "clickMeButton", src: "./Assets/images/clickMeButton.png" },
+    { id: "startButton", src: "./Assets/images/startButton.png" }
+  ];
 
   // preloads assets
   function Init(): void {
@@ -36,16 +39,29 @@
   }
 
   function Update(): void {
+
+    // if the scene that is playing returns another current scene, the call Main again and switch the scene
+    if (currentScene.Update() != objects.Game.currentScene) {
+      console.log(objects.Game.currentScene);
+      Main();
+    }
+
+
     stage.update(); // redraws the stage
   }
 
   function Main(): void {
-    switch(objects.Game.currentScene){
+    switch (objects.Game.currentScene) {
       case config.Scene.START:
-      
-      break;
+        stage.removeAllChildren();
+        currentScene = new scenes.StartScene(assetManager);
+        stage.addChild(currentScene);
+        break;
       case config.Scene.PLAY:
-      //Do some other stuff
+        //Do some other stuff
+        break;
+      case config.Scene.OVER:
+        break;
     }
   }
 

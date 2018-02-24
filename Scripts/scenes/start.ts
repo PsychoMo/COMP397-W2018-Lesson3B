@@ -11,6 +11,8 @@ module scenes {
         // Constructor
         constructor(assetManager: createjs.LoadQueue) {
             super(assetManager);
+
+            this.Start();
         }
 
         // Private Methods
@@ -28,8 +30,10 @@ module scenes {
 
         }
 
-        public Update(): void {
+        public Update(): number {
+            console.log("start update");
 
+            return objects.Game.currentScene;
         }
 
         // This is where the fun happens
